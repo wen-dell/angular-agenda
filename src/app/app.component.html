@@ -1,9 +1,12 @@
 <nav>
   <div class="nav-wrapper cyan lighten-2">
-    <a href="#" class="brand-logo right">Angular Agenda</a>
+    <a routerLink="" class="brand-logo right">Angular Agenda</a>
     <ul id="nav-mobile" class="left hide-on-med-and-down">
-      <li><a>Contacts</a></li>
-      <li><a>Add new</a></li>
+      <li><a routerLink="/contacts">Contacts</a></li>
+      <li><a routerLink="/contact/new">Add new</a></li>
     </ul>
   </div>
 </nav>
+<div class="container">
+  <router-outlet></router-outlet>
+</div>
