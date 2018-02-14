@@ -32,7 +32,11 @@ export class ContactListComponent implements OnInit {
   }
 
   delete(contact: Contact) {
-    this.contactListService.delete(contact);
+    let option = confirm(`Do you really want to delete the contact ${contact.name}?`);
+
+    if (option) {
+      this.contactListService.delete(contact);
+    }
   }
 
   updateContact(contact: Contact) {
