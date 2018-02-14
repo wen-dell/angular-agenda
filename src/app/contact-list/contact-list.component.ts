@@ -36,8 +36,7 @@ export class ContactListComponent implements OnInit {
   }
 
   updateContact(contact: Contact) {
-    this.contactListService.contactEmitter.emit(contact);
-    this.router.navigate(['contact/edit']);
+    this.router.navigate(['contact', contact.id, 'edit']);
   }
 
 }

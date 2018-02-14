@@ -10,7 +10,7 @@ import { NotFoundComponent } from "./not-found/not-found.component";
 const appRoutes: Routes = [
     { path: 'contacts', component: ContactListComponent },
     { path: 'contact/new', component: ContactFormComponent },
-    { path: 'contact/edit', component: ContactFormComponent },
+    { path: 'contact/:id/edit', component: ContactFormComponent },
     { path: '', redirectTo: 'contacts', pathMatch: 'full' },
     { path: '**', component: NotFoundComponent }
 ];

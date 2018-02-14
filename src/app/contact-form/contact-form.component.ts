@@ -5,6 +5,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Contact } from '../models/contact';
 import { ContactListService } from '../contact-list/contact-list.service';
 import { Subscription } from 'rxjs/Subscription';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -15,12 +16,18 @@ import { Subscription } from 'rxjs/Subscription';
 export class ContactFormComponent implements OnInit {
 
   form: FormGroup;
-  contact: Contact;
   subscription: Subscription;
+  contact: Contact;
 
-  constructor(private formBuilder: FormBuilder, private contactListService: ContactListService) {
-    
-   }
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private route: ActivatedRoute,
+    private contactListService: ContactListService
+  ) {
+      this.contact = new Contact();
+  }
+
 
   ngOnInit() {
     this.form = this.formBuilder.group({
@@ -29,20 +36,28 @@ export class ContactFormComponent implements OnInit {
       telephone: [null, Validators.required]
     });
 
-    this.subscription = this.contactListService.contactEmitter.subscribe(
-      contact =>{
-        this.contact = contact;
+    if (this.router.url.includes("edit")) {
+      this.subscription = this.route.params.subscribe(
+        (params: any) => {
+          let id: number = params['id'];
+          this.contact = this.contactListService.getContact(id);
+  
+          this.form.setValue({
+            name: this.contact.name,
+            email: this.contact.email,
+            telephone: this.contact.telephone
+          });
+        }
+      );
 
-        this.form.setValue({
-          name: this.contact.name,
-          email: this.contact.email,
-          telephone: this.contact.telephone
-        });
-    });
+    }
+
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   get name() {
@@ -63,7 +78,17 @@ export class ContactFormComponent implements OnInit {
     contact.email = this.email.value;
     contact.telephone = this.telephone.value;
 
-    this.contactListService.addCourse(contact);
+    if (this.router.url.includes("edit")) {
+      this.contact.name = contact.name;
+      this.contact.email = contact.email;
+      this.contact.telephone = contact.telephone;
+
+      this.contactListService.updateCourse(this.contact);
+    } else {
+      this.contactListService.addCourse(contact);
+    }
+
+    this.router.navigate(['/contacts']);
     this.form.reset();
   }
 

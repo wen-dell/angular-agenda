@@ -7,10 +7,20 @@ import { contacts } from './../contacts';
 export class ContactListService {
 
   contacts: Contact[] = [];
-  contactEmitter = new EventEmitter<Contact>();
+  static id: number;
 
   constructor() {
     this.contacts = contacts;
+    ContactListService.id = this.contacts.length;
+  }
+
+  getContact(id: number) {
+    for (let i = 0; i < this.contacts.length; i++) {
+      if (this.contacts[i].id == id) {
+        return this.contacts[i];
+      }
+    }
+    return null;
   }
   
   getContacts() {
@@ -18,12 +28,18 @@ export class ContactListService {
   }
 
   addCourse(contact: Contact) {
+    contact.id = ++ContactListService.id;
     this.contacts.push(contact);
   }
 
+  updateCourse(contact: Contact) {
+    let position = this.contacts.indexOf(contact);
+    this.contacts[position] = contact;
+  }
+
   delete(contact: Contact) {
-    let posicao = this.contacts.indexOf(contact);
-    this.contacts.splice(posicao, 1);
+    let position = this.contacts.indexOf(contact);
+    this.contacts.splice(position, 1);
   }
 
 }
