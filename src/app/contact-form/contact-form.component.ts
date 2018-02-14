@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Contact } from '../models/contact';
 import { ContactListService } from '../contact-list/contact-list.service';
+import { Subscription } from 'rxjs/Subscription';
 
 
 @Component({
@@ -14,8 +15,12 @@ import { ContactListService } from '../contact-list/contact-list.service';
 export class ContactFormComponent implements OnInit {
 
   form: FormGroup;
+  contact: Contact;
+  subscription: Subscription;
 
-  constructor(private formBuilder: FormBuilder, private contactListService: ContactListService) { }
+  constructor(private formBuilder: FormBuilder, private contactListService: ContactListService) {
+    
+   }
 
   ngOnInit() {
     this.form = this.formBuilder.group({
@@ -23,6 +28,21 @@ export class ContactFormComponent implements OnInit {
       email: [null],
       telephone: [null, Validators.required]
     });
+
+    this.subscription = this.contactListService.contactEmitter.subscribe(
+      contact =>{
+        this.contact = contact;
+
+        this.form.setValue({
+          name: this.contact.name,
+          email: this.contact.email,
+          telephone: this.contact.telephone
+        });
+    });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   get name() {
