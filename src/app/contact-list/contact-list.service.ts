@@ -1,13 +1,28 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+
+import { Contact } from './../models/contact';
+import { contacts } from './../contacts';
 
 @Injectable()
 export class ContactListService {
 
-  constructor(private http: HttpClient) { }
+  contacts: Contact[] = [];
 
+  constructor() {
+    this.contacts = contacts;
+  }
+  
   getContacts() {
-    return this.http.get('assets/data/contacts.json');
+    return this.contacts;   
+  }
+
+  addCourse(contact: Contact) {
+    this.contacts.push(contact);
+  }
+
+  delete(contact: Contact) {
+    let posicao = this.contacts.indexOf(contact);
+    this.contacts.splice(posicao, 1);
   }
 
 }

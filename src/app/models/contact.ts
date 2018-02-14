@@ -1,6 +1,9 @@
-export interface Contact {
+export class Contact {
 
-    id: number;
+    constructor() {
+
+    }
+
     name: string;
     email: string;
     telephone: string;
