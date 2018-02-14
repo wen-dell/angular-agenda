@@ -17,28 +17,10 @@
       </thead>
 
       <tbody>
-        <tr>
-          <td>Beatriz</td>
-          <td>beatriz@gmail.com</td>
-          <td>9999-9999</td>
-          <td>
-            <a class="btn-floating btn-large waves-effect waves-light blue" title="Edit"><i class="material-icons">mode_edit</i></a>
-            <a class="btn-floating btn-large waves-effect waves-light red" title="Delete"><i class="material-icons">delete</i></a>
-          </td>
-        </tr>
-        <tr>
-          <td>Paulo</td>
-          <td>paulo@hotmail.com</td>
-          <td>9999-8888</td>
-          <td>
-            <a class="btn-floating btn-large waves-effect waves-light blue" title="Edit"><i class="material-icons">mode_edit</i></a>
-            <a class="btn-floating btn-large waves-effect waves-light red" title="Delete"><i class="material-icons">delete</i></a>
-          </td>
-        </tr>
-        <tr>
-          <td>Roberta</td>
-          <td>roberta@gmail.com</td>
-          <td>8888-9999</td>
+        <tr *ngFor="let contact of contacts">
+          <td>{{ contact.name }}</td>
+          <td>{{ contact.email }}</td>
+          <td>{{ contact.telephone }}</td>
           <td>
             <a class="btn-floating btn-large waves-effect waves-light blue" title="Edit"><i class="material-icons">mode_edit</i></a>
             <a class="btn-floating btn-large waves-effect waves-light red" title="Delete"><i class="material-icons">delete</i></a>

@@ -1,5 +1,6 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 
 
 import { AppComponent } from './app.component';
@@ -8,6 +9,7 @@ import { ContactListComponent } from './contact-list/contact-list.component';
 import { ContactFormComponent } from './contact-form/contact-form.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AppRoutingModule } from './app-routing.module';
+import { ContactListService } from './contact-list/contact-list.service';
 
 
 @NgModule({
@@ -20,9 +22,10 @@ import { AppRoutingModule } from './app-routing.module';
   imports: [
     BrowserModule,
     MaterializeModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [ContactListService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
